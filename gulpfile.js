@@ -10,22 +10,33 @@ const gulp = require('gulp');
 const microdrop = require('../../package.json');
 const log = console.log;
 
+const m1 = (m) => log(c.bold(c.blue(m)));
+const m2 = (m) => log(c.bold(c.green(m)));
+
 const spawnAsync = (cmd) => {
   return new Promise((resolve, reject) => {
     const child = spawn(cmd, {stdio: 'inherit', shell: true});
-    child.on('exit', (d) => {
-      resolve(undefined);
+    child.on('exit', (code) => {
+      resolve(code);
     });
   });
 }
 
 gulp.task('push:build:commit', async (d) => {
-  log(c.bold(c.blue('add changes to feedstock')));
-  await spawnAsync('git add package-lock.json && git add -p');
-  log(c.bold(c.blue('push changes to feedstock master branch')));
-  await spawnAsync('git commit && git push origin master');
-  log(c.bold(c.blue('push submodule changes to microdrop master branch')));
-  await spawnAsync('cd .. && git add ./feedstock && git commit -m "conda-build" && git push origin master');
+  let code;
+
+  m1('add changes to feedstock');
+  code = await spawnAsync('git add package-lock.json && git add -p');
+  m2(`code: ${code}`);
+
+  m1('push changes to feedstock master branch');
+  code = await spawnAsync('git commit && git push origin master');
+  m2(`code: ${code}`);
+
+  m1('push submodule changes to microdrop master branch');
+  code = await spawnAsync('cd .. && git add ./feedstock && git commit -m "conda-build" && git push origin master');
+  m2(`code: ${code}`);
+
   console.log(process.cwd());
 });
 
