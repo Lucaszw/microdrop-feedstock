@@ -11,8 +11,8 @@ const yaml = require('yamljs');
 const microdrop = require('../../package.json');
 const log = console.log;
 
-const m1 = (m) => log(c.bold(c.blue(m)));
-const m2 = (m) => log(c.green(m));
+const m1 = (...m) => log(c.bold(c.blue(...m)));
+const m2 = (...m) => log(c.green(...m));
 
 const spawnAsync = (cmd) => {
   return new Promise((resolve, reject) => {
@@ -65,13 +65,18 @@ gulp.task('build', async (d) => {
 });
 
 gulp.task('conda:build', async () => {
-  // recursively install packages
+  m1('recursively installing packages');
   await spawnAsync('gulp install:all');
 
   const prefix = process.env.PREFIX;
+  m2('environment prefix:', prefix);
 
   // wrap working directory into a node_modules folder
-  await mvAsync(path.resolve('.', '*'), path.resolve(prefix, 'microdrop-3.0'));
+  var src = path.resolve('.', '*');
+  var dest = path.resolve(prefix, 'microdrop-3.0');
+  m1('moving', src, 'to', dest);
+  await mvAsync(src, dest);
+
   // await mvAsync(path.resolve('..', 'microdrop-3.0'), path.resolve('.', 'node_modules'));
 
   // ./node_modules/microdrop
