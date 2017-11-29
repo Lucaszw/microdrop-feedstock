@@ -48,11 +48,12 @@ gulp.task('build', async (d) => {
 
   m1('updating meta.yaml file')
   await promisify(fs.writeFile)(file, yaml.stringify(meta, 4));
+  m2(yaml.stringify(meta, 4));
 
   m1('running conda build .')
   await spawnAsync('conda build .');
 });
 
 gulp.task('conda:build', () => {
-  spawn('npm i -g microdrop-3', {stdio: 'inherit', shell: true});
+  spawn('npm i -g microdrop-3.0', {stdio: 'inherit', shell: true});
 });
