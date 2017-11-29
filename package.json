@@ -22,6 +22,7 @@
   },
   "homepage": "https://github.com/Lucaszw/microdrop-feedstock#readme",
   "dependencies": {
+    "chalk": "^2.3.0",
     "gulp": "^3.9.1",
     "yamljs": "^0.3.0",
     "yo-yo": "^1.4.1"
