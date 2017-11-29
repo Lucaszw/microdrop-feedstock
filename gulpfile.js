@@ -4,6 +4,7 @@ const {promisify} = require('util');
 const {spawn} = require('child_process');
 
 const c = require('chalk');
+const del = require('del');
 const gulp = require('gulp');
 const yaml = require('yamljs');
 
@@ -71,6 +72,7 @@ gulp.task('build', async (d) => {
 
 gulp.task('conda:build', async () => {
   title('installing dependencies');
+  await del(path.resolve('../..', 'node_modules'));
   await spawnAsync('npm install', path.resolve('../..'));
   title('installing plugins');
   await spawnAsync('node_modules/.bin/gulp install:plugins:clean', path.resolve('../..'));
