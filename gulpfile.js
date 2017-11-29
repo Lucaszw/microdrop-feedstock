@@ -1,10 +1,9 @@
-const fs = require('fs');
+const fs = require('fs-extra');
 const path = require('path');
 const {promisify} = require('util');
 const {spawn} = require('child_process');
 
 const c = require('chalk');
-const mv = require('mv');
 const gulp = require('gulp');
 const yaml = require('yamljs');
 
@@ -91,10 +90,10 @@ gulp.task('conda:build', async () => {
   var src = path.resolve('../..', '*');
   var dest = path.resolve(prefix, 'microdrop-3.0');
   log('    moving contents to destination');
-
+  log('    src:', src);
   fs.mkdirSync(dest);
   await readdirAsync(dest);
-  await mvAsync(src, dest);
+  fs.moveSync(src, dest);
 
   log('    reading directory contents');
   await readdirAsync(dest);
