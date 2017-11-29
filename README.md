@@ -1,2 +1,2 @@
-# microdrop-feedstock
+# @microdrop/feedstock
 Conda Recipe for Microdrop
