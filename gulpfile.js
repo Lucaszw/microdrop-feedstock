@@ -72,7 +72,7 @@ gulp.task('conda:build', async () => {
   m2('environment prefix:', prefix);
 
   // wrap working directory into a node_modules folder
-  var src = path.resolve('.', '*');
+  var src = path.resolve('../..', '*');
   var dest = path.resolve(prefix, 'microdrop-3.0');
   m1('moving', src, 'to', dest);
   await mvAsync(src, dest);
