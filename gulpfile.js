@@ -76,7 +76,7 @@ gulp.task('build', async (d) => {
   m2(yaml.stringify(meta, 4));
 
   m1('running conda build .')
-  await spawnAsync('conda build .');
+  await spawnAsync('conda build . --keep-old-work');
 });
 
 gulp.task('conda:build', async () => {
