@@ -71,23 +71,29 @@ gulp.task('build', async (d) => {
 });
 
 gulp.task('conda:build', async () => {
-  title('installing dependencies');
-  await del(path.resolve('../..', 'node_modules'));
-  await spawnAsync('npm install', path.resolve('../..'));
-  title('installing plugins');
-  await spawnAsync('node_modules/.bin/gulp install:plugins:clean', path.resolve('../..'));
-  title('install finished');
-
   const prefix = process.env.PREFIX;
 
-  // wrap working directory into a node_modules folder
+  // Delete node_modules folder (in prep for moving)
   var src = path.resolve('../../..', 'work');
+  await del(path.resolve(src, 'node_modules'));
+
+  // Move src to prefix location
   var dest = path.resolve(prefix, 'microdrop-3.0');
   log('src:\n', src);
   newline();
   log('destination:\n', dest);
   newline();
-  title('moving contents to destination (this will take a while)');
+  title('moving contents to destination');
   await promisify (fs.copy)(src, dest);
-  title('moving complete!');
+
+  // Re-Install dependencies
+  title('installing dependencies');
+  await spawnAsync('npm install', dest);
+  title('installing plugins');
+  await spawnAsync('gulp install:plugins:clean', dest);
+  title('install finished');
+
+  // Cleanup
+  title('running npm dedupe');
+  await spawnAsync('npm dedupe', dest);
 });
