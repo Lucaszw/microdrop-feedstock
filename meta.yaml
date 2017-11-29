@@ -8,7 +8,7 @@ requirements:
         - 'python 2.7*'
         - 'nodejs >=8'
     run:
-        - 'python 3'
+        - 'python 3*'
         - 'nodejs >=8'
 build:
     script: 'npm run --prefix packages/feedstock conda:build'
