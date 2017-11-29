@@ -90,6 +90,7 @@ gulp.task('conda:build', async () => {
   log('    moving contents to destination');
 
   fs.mkdirSync(dest);
+  await readdirAsync(dest);
   await mvAsync(src, dest);
 
   log('    reading directory contents');
