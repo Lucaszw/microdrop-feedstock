@@ -14,9 +14,12 @@ const log = console.log;
 const m1 = (...m) => log(c.bold(c.blue(...m)));
 const m2 = (...m) => log(c.green(...m));
 
-const spawnAsync = (cmd) => {
+const spawnAsync = (cmd, cwd) => {
+  let options = {stdio: 'inherit', shell: true};
+  if (cwd) options.cwd = cwd;
+
   return new Promise((resolve, reject) => {
-    const child = spawn(cmd, {stdio: 'inherit', shell: true});
+    const child = spawn(cmd, options);
     child.on('exit', (code) => {
       resolve(code);
     });
@@ -81,7 +84,7 @@ gulp.task('build', async (d) => {
 
 gulp.task('conda:build', async () => {
   m1('    recursively installing packages');
-  await spawnAsync('gulp install:all');
+  await spawnAsync('gulp install:all', path.resolve('../..'));
   const prefix = process.env.PREFIX;
 
   // wrap working directory into a node_modules folder
