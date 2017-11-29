@@ -69,13 +69,24 @@ gulp.task('conda:build', async () => {
   await spawnAsync('gulp install:all');
 
   const prefix = process.env.PREFIX;
+  log('####');
   m2('environment prefix:', prefix);
 
   // wrap working directory into a node_modules folder
   var src = path.resolve('../..', '*');
   var dest = path.resolve(prefix, 'microdrop-3.0');
+  log('####');
   m1('moving', src, 'to', dest);
   await mvAsync(src, dest);
+
+  log('####');
+  fs.readdir(dest, function(err, items) {
+    log(items);
+
+    for (var i=0; i<items.length; i++) {
+      log(items[i]);
+    }
+  });
 
   // await mvAsync(path.resolve('..', 'microdrop-3.0'), path.resolve('.', 'node_modules'));
 
