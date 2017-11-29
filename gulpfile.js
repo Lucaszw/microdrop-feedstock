@@ -26,6 +26,7 @@ const spawnAsync = (cmd) => {
 const mvAsync = (src, dest) => {
   return new Promise((resolve, reject) => {
     mv(src, dest, {mkdirp: true}, function(err) {
+      log(err);
       resolve(err);
     });
   });
