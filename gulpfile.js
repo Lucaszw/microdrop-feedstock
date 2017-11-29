@@ -84,7 +84,7 @@ gulp.task('build', async (d) => {
 
 gulp.task('conda:build', async () => {
   m1('    recursively installing packages');
-  await spawnAsync('gulp install:all', path.resolve('../..'));
+  await spawnAsync('node_modules/.bin/gulp install:all', path.resolve('../..'));
   const prefix = process.env.PREFIX;
 
   // wrap working directory into a node_modules folder
