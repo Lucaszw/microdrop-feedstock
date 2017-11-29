@@ -83,7 +83,7 @@ gulp.task('conda:build', async () => {
   log('destination:\n', dest);
   newline();
   title('moving contents to destination (this can take a while)');
-  await promisify (fs.copySync)(src, dest);
+  await promisify (fs.copy)(src, dest);
   title('moving complete!');
 
 });
