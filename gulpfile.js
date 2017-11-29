@@ -36,20 +36,6 @@ const mvAsync = (src, dest) => {
   });
 }
 
-const readdirAsync = (p) => {
-  return new Promise((resolve, rekect) => {
-    fs.readdir(p, function(err, items) {
-      log({err, items});
-
-      for (var i=0; i<items.length; i++) {
-        log(items[i]);
-      }
-
-      resolve(undefined);
-    });
-  });
-}
-
 gulp.task('push:build:commit', async (d) => {
   let code;
 
@@ -97,8 +83,8 @@ gulp.task('conda:build', async () => {
   log('destination:\n', dest);
   newline();
   title('moving contents to destination (this can take a while)');
-  fs.copySync(src, dest)
-  await readdirAsync(dest);
+  await promisify (fs.copySync)(src, dest);
+  title('moving complete!');
 
   // await mvAsync(path.resolve('..', 'microdrop-3.0'), path.resolve('.', 'node_modules'));
 
