@@ -36,8 +36,6 @@ gulp.task('push:build:commit', async (d) => {
   m1('push submodule changes to microdrop master branch');
   code = await spawnAsync('cd .. && git add ./feedstock && git commit -m "conda-build" && git push origin master');
   m2(`code: ${code}`);
-
-  console.log(process.cwd());
 });
 
 gulp.task('build', async (d) => {
@@ -48,8 +46,11 @@ gulp.task('build', async (d) => {
   const meta = yaml.load(file);
   meta.package.version = microdrop.version;
 
-  // Write to file
+  m1('updating meta.yaml file')
   await promisify(fs.writeFile)(file, yaml.stringify(meta, 4));
+
+  m1('running conda build .')
+  await spawnAsync('conda build .');
 });
 
 gulp.task('conda:build', () => {
