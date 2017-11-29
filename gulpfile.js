@@ -11,7 +11,7 @@ const microdrop = require('../../package.json');
 const log = console.log;
 
 const m1 = (m) => log(c.bold(c.blue(m)));
-const m2 = (m) => log(c.bold(c.green(m)));
+const m2 = (m) => log(c.green(m));
 
 const spawnAsync = (cmd) => {
   return new Promise((resolve, reject) => {
@@ -45,7 +45,8 @@ gulp.task('build', async (d) => {
   // Load meta.yaml file
   const meta = yaml.load(file);
   meta.package.version = microdrop.version;
-
+  meta.package.name = microdrop.name;
+  
   m1('updating meta.yaml file')
   await promisify(fs.writeFile)(file, yaml.stringify(meta, 4));
   m2(yaml.stringify(meta, 4));
