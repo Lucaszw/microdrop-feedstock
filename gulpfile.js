@@ -73,7 +73,7 @@ gulp.task('conda:build', async () => {
   title('installing dependencies');
   await spawnAsync('npm install', path.resolve('../..'));
   title('installing plugins');
-  await spawnAsync('node_modules/.bin/gulp install:plugins', path.resolve('../..'));
+  await spawnAsync('node_modules/.bin/gulp install:plugins:clean', path.resolve('../..'));
   title('install finished');
 
   const prefix = process.env.PREFIX;
