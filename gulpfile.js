@@ -71,8 +71,8 @@ gulp.task('build', async (d) => {
 
 gulp.task('conda:build', async () => {
   title('recursively installing packages');
-  await spawnAsync('npm install', path.resolve('../..'));
-  await spawnAsync('node_modules/.bin/gulp install:all', path.resolve('../..'));
+  // await spawnAsync('npm install', path.resolve('../..'));
+  // await spawnAsync('node_modules/.bin/gulp install:all', path.resolve('../..'));
   const prefix = process.env.PREFIX;
 
   // wrap working directory into a node_modules folder
@@ -86,7 +86,4 @@ gulp.task('conda:build', async () => {
   await promisify (fs.copySync)(src, dest);
   title('moving complete!');
 
-  // await mvAsync(path.resolve('..', 'microdrop-3.0'), path.resolve('.', 'node_modules'));
-
-  // ./node_modules/microdrop
 });
