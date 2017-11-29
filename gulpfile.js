@@ -37,7 +37,7 @@ const mvAsync = (src, dest) => {
   });
 }
 
-gulp.task('push:build:commit', async (d) => {
+gulp.task('git:add:commit:push', async (d) => {
   let code;
 
   m1('add changes to feedstock');
@@ -91,6 +91,8 @@ gulp.task('conda:build', async () => {
   await spawnAsync('npm install', dest);
   title('installing plugins');
   await spawnAsync('gulp install:plugins:clean', dest);
+  title('building ui');
+  await spawnAsync('gulp build:ui:clean', dest);
   title('install finished');
 
   // Cleanup
