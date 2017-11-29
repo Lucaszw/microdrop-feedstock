@@ -1,0 +1,20 @@
+package:
+    name: microdrop-3
+    version: 3.1.18
+source:
+    git_url: ../..
+
+requirements:
+    build:
+      - python 2.7*
+      - nodejs >=8
+    run:
+      - python 3
+      - nodejs >=8
+build:
+  script: npm run --prefix packages/feedstock build
+
+about:
+    home: 'https://github.com/sci-bots/microdrop-3.0'
+    license: BSD
+    license_file: LICENSE
