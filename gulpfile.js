@@ -20,11 +20,11 @@ const spawnAsync = (cmd) => {
 }
 
 gulp.task('push:build:commit', async (d) => {
-  log(c.blue('add changes to feedstock'));
+  log(c.bold(c.blue('add changes to feedstock')));
   await spawnAsync('git add package-lock.json && git add -p');
-  log(c.blue('push changes to feedstock master branch'));
+  log(c.bold(c.blue('push changes to feedstock master branch')));
   await spawnAsync('git commit && git push origin master');
-  log(c.blue('push submodule changes to microdrop master branch'));
+  log(c.bold(c.blue('push submodule changes to microdrop master branch')));
   await spawnAsync('cd .. && git add ./feedstock && git commit -m "conda-build" && git push origin master');
   console.log(process.cwd());
 });
