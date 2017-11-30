@@ -71,6 +71,10 @@ gulp.task('conda:post-link', async() => {
   title('post-link complete');
 });
 
+gulp.task('conda:run-test', async (d) => {
+  title('Running tests...');
+});
+
 gulp.task('git:add:commit:push', async (d) => {
   /* Automate git add -p , git commit , and git push */
   let code;
