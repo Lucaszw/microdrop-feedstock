@@ -17,24 +17,26 @@ const m2 = (...m) => log(c.green(...m));
 const newline = () => log('\n');
 const title = (...m) => log('\n', ...m, '\n ');
 
-const git_url = 'https://github.com/Lucaszw/microdrop-feedstock.git';
+const GIT_URL = 'https://github.com/Lucaszw/microdrop-feedstock.git';
+const PACKAGE_NAME = 'microdrop-3.0';
+const INSTALL_LOC = 'share/microdrop-3';
 
 gulp.task('conda:build', async () => {
   /* Ran in conda build process */
   const prefix = process.env.PREFIX;
-  const loc = path.resolve(prefix, 'share/microdrop-3');
+  const loc = path.resolve(prefix, INSTALL_LOC);
   if (!fs.existsSync(loc)) fs.mkdirSync(loc);
 
   title('packing microdrop');
-  await spawnAsync(`npm pack microdrop-3.0`, loc);
+  await spawnAsync(`npm pack ${PACKAGE_NAME}`, loc);
 
   title('cloning feedstock');
-  await spawnAsync(`git clone ${git_url} feedstock`, loc);
+  await spawnAsync(`git clone ${GIT_URL} feedstock`, loc);
 });
 
 gulp.task('conda:post-link', async() => {
   const prefix = process.env.PREFIX;
-  const loc = path.resolve(prefix, 'share/microdrop-3')
+  const loc = path.resolve(prefix, INSTALL_LOC)
   const contents = await dir.promiseFiles(loc);
 
   title('creating python2 environment');
@@ -50,7 +52,7 @@ gulp.task('conda:post-link', async() => {
   title('getting microdrop-3 package');
   let filename;
   for (const [i, file] of contents.entries()) {
-    if (_.includes(file, 'microdrop-3.0') && _.includes(file, '.tgz')){
+    if (_.includes(file, PACKAGE_NAME) && _.includes(file, '.tgz')){
       filename = path.resolve(loc, file);
       break;
     }
@@ -58,6 +60,7 @@ gulp.task('conda:post-link', async() => {
   log({filename});
 
   title('installing microdrop-3');
+  await spawnAsync(`npm un ${PACKAGE_NAME} --python=${python2}`);
   await spawnAsync(`npm i ${filename} --python=${python2}`);
 
   title('removing python2 environment');
@@ -88,15 +91,12 @@ gulp.task('build', async (d) => {
   const file = path.resolve(__dirname, 'meta.yaml');
 
   // Load meta.yaml file
+  m1('updating meta.yaml file')
   const meta = yaml.load(file);
-  var {output} = await spawnAsync('npm view microdrop-3.0 --json', null, true);
-  console.log({output});
+  var {output} = await spawnAsync(`npm view ${PACKAGE_NAME} --json`, null, true);
   const microdrop = JSON.parse(output[0]);
-  console.log({microdrop});
   meta.package.version = microdrop.version;
   meta.package.name = microdrop.name;
-
-  m1('updating meta.yaml file')
   await promisify(fs.writeFile)(file, yaml.stringify(meta, 4));
   m2(yaml.stringify(meta, 4));
 
