@@ -126,7 +126,7 @@ function spawnAsync(cmd, cwd, hideOutput) {
     const output = [];
     if (hideOutput) {
       child.stdout.on('data', (d)=> {
-        output.push(data);
+        output.push(d);
       });
     }
     child.on('exit', (code) => {
