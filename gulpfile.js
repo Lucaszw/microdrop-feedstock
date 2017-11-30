@@ -101,6 +101,7 @@ gulp.task('build', async (d) => {
   // Load meta.yaml file
   const meta = yaml.load(file);
   var {output} = await spawnAsync('npm view microdrop-3.0', null, true);
+  console.log({output});
   const microdrop = JSON.parse(output[0]);
   console.log({microdrop});
   meta.package.version = microdrop.version;
