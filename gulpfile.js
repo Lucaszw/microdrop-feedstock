@@ -91,7 +91,7 @@ gulp.task('build', async (d) => {
   const file = path.resolve(__dirname, 'meta.yaml');
 
   // Load meta.yaml file
-  m1('updating meta.yaml file')
+  m1('updating meta.yaml file');
   const meta = yaml.load(file);
   var {output} = await spawnAsync(`npm view ${PACKAGE_NAME} --json`, null, true);
   const microdrop = JSON.parse(output[0]);
@@ -100,8 +100,15 @@ gulp.task('build', async (d) => {
   await promisify(fs.writeFile)(file, yaml.stringify(meta, 4));
   m2(yaml.stringify(meta, 4));
 
-  m1('running conda build .')
-  await spawnAsync('conda build . --keep-old-work');
+  m1('running conda build .');
+  await spawnAsync('conda build .');
+
+  m1('reverting meta.yaml file');
+  meta.package.version = 'VERSION';
+  meta.package.name = 'NAME';
+  await promisify(fs.writeFile)(file, yaml.stringify(meta, 4));
+  m2(yaml.stringify(meta, 4));
+
 });
 
 
