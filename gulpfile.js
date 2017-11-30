@@ -33,10 +33,6 @@ gulp.task('conda:build', async () => {
 });
 
 gulp.task('conda:post-link', async() => {
-  log("POST LINK!");
-  log(process.env);
-  log(process.cwd());
-  log(process.env.PREFIX);
   const prefix = process.env.PREFIX;
   const loc = path.resolve(prefix, 'share/microdrop-3')
   const contents = await dir.promiseFiles(loc);
