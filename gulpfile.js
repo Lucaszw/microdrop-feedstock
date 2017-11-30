@@ -111,7 +111,7 @@ gulp.task('build', async (d) => {
   await promisify(fs.writeFile)(file, yaml.stringify(meta, 4));
   m2(yaml.stringify(meta, 4));
 
-  m1('running conda build .')
+  m1('running conda build . -v')
   await spawnAsync('conda build . --keep-old-work');
 });
 
