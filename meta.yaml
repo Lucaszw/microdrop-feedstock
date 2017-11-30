@@ -7,10 +7,11 @@ requirements:
     build:
         - 'python 2.7*'
         - 'nodejs >=8'
-        - gulp
+        - 'gulp'
     run:
         - 'python 3*'
         - 'nodejs >=8'
+        - 'gulp'
 build:
     script: 'npm run --prefix packages/feedstock conda:build'
 about:
