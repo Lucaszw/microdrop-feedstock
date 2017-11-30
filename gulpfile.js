@@ -30,7 +30,7 @@ gulp.task('conda:build', async () => {
   await del(path.resolve('node_modules'));
 
   title('copying feedstock');
-  const src = path.resolve('../feedstock');
+  const src = path.resolve('.');
   const dest = path.resolve(loc, 'feedstock');
   await promisify (fs.copy)(src, dest);
 });
