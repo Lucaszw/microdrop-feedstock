@@ -12,9 +12,8 @@ requirements:
     run:
         - 'python 3*'
         - 'nodejs >=8'
-        - gulp
 build:
-    script: 'npm run conda:build'
+    script: 'gulp conda:build'
 about:
     home: 'https://github.com/sci-bots/microdrop-3.0'
     license: BSD

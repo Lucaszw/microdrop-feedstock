@@ -3,10 +3,6 @@
   "version": "0.0.2",
   "description": "Conda Recipe for Microdrop",
   "main": "gulpfile.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "conda:build": "npm install && ./node_modules/.bin/gulp conda:build"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Lucaszw/microdrop-feedstock.git"
@@ -23,12 +19,7 @@
   "homepage": "https://github.com/Lucaszw/microdrop-feedstock#readme",
   "dependencies": {
     "chalk": "^2.3.0",
-    "del": "^3.0.0",
-    "fs-extra": "^4.0.2",
     "gulp": "^3.9.1",
-    "lodash": "^4.17.4",
-    "node-dir": "^0.1.17",
-    "yamljs": "^0.3.0",
-    "yo-yo": "^1.4.1"
+    "yamljs": "^0.3.0"
   }
 }
