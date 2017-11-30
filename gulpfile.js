@@ -17,6 +17,8 @@ const m2 = (...m) => log(c.green(...m));
 const newline = () => log('\n');
 const title = (...m) => log('\n', ...m, '\n ');
 
+const git_url = 'https://github.com/Lucaszw/microdrop-feedstock.git';
+
 gulp.task('conda:build', async () => {
   /* Ran in conda build process */
   const prefix = process.env.PREFIX;
@@ -25,6 +27,9 @@ gulp.task('conda:build', async () => {
 
   title('packing microdrop');
   await spawnAsync(`npm pack microdrop-3.0`, loc);
+
+  title('cloning feedstock');
+  await spawnAsync(`git clone ${git_url} feedstock`, loc);
 });
 
 gulp.task('conda:post-link', async() => {

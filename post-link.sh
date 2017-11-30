@@ -1,3 +1,3 @@
 source activate
-npm --prefix $(npm root -g)/microdrop-3.0/packages/feedstock install
-gulp --cwd $(npm root -g)/microdrop-3.0/packages/feedstock conda:post-link
+npm --prefix ../share/microdrop-3/feedstock install
+gulp --cwd ../share/microdrop-3/feedstock conda:post-link

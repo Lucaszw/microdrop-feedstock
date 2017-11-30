@@ -1,12 +1,13 @@
 package:
     name: microdrop-3.0
-    version: 3.1.18
+    version: 3.1.20
 source:
     git_url: 'https://github.com/Lucaszw/microdrop-feedstock'
 requirements:
     build:
         - 'python 2.7*'
         - 'nodejs >=8'
+        - git
         - gulp
     run:
         - 'python 3*'
