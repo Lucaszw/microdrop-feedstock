@@ -10,7 +10,6 @@ const gulp = require('gulp');
 const yaml = require('yamljs');
 const _ = require('lodash');
 
-const microdrop = require('../../package.json');
 const log = console.log;
 
 const m1 = (...m) => log(c.bold(c.blue(...m)));
@@ -101,6 +100,9 @@ gulp.task('build', async (d) => {
 
   // Load meta.yaml file
   const meta = yaml.load(file);
+  var {output} = spawnAsync('npm view microdrop-3.0', null, true);
+  const microdrop = JSON.parse(output[0]);
+  console.log({microdrop});
   meta.package.version = microdrop.version;
   meta.package.name = microdrop.name;
 
