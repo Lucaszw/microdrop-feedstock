@@ -25,14 +25,6 @@ gulp.task('conda:build', async () => {
 
   title('packing microdrop');
   await spawnAsync(`npm pack microdrop-3.0`, loc);
-
-  title('removing node_modules folder from feedstock');
-  await del(path.resolve('node_modules'));
-
-  title('copying feedstock');
-  const src = path.resolve('.');
-  const dest = path.resolve(loc, 'feedstock');
-  await promisify (fs.copy)(src, dest);
 });
 
 gulp.task('conda:post-link', async() => {
