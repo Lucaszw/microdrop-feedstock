@@ -126,8 +126,9 @@ function spawnAsync(cmd, cwd, hideOutput) {
     const child = spawn(cmd, options);
     const output = [];
     if (hideOutput) {
+      child.stdout.setEncoding('utf8');
       child.stdout.on('data', (d)=> {
-        output.push(d.toString());
+        output.push(d);
       });
     }
     child.on('exit', (code) => {
