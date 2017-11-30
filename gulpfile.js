@@ -27,14 +27,25 @@ gulp.task('conda:build', async () => {
   const loc = path.resolve(prefix, INSTALL_LOC);
   if (!fs.existsSync(loc)) fs.mkdirSync(loc);
 
-  title('packing microdrop');
-  await spawnAsync(`npm pack ${PACKAGE_NAME}`, loc);
+  if (os.platform() == 'win32') {
+    title('installing buildtools (must be running as Administrator)');
+    await spawnAsync(`npm install --global --production windows-build-tools`);
+  }
+
+  title('installing microdrop');
+  await spawnAsync(`npm install -g ${PACKAGE_NAME}`);
+
+  if (os.platform() == 'win32') {
+    title('uninstalling buildtools (must be running as Administrator)');
+    await spawnAsync(`npm uninstall --global windows-build-tools`);
+  }
 
   title('cloning feedstock');
   await spawnAsync(`git clone ${GIT_URL} feedstock`, loc);
 });
 
 gulp.task('conda:post-link', async() => {
+  return;
   const prefix = process.env.PREFIX;
   const loc = path.resolve(prefix, INSTALL_LOC)
   const contents = await dir.promiseFiles(loc);
@@ -67,10 +78,6 @@ gulp.task('conda:post-link', async() => {
   await spawnAsync('conda remove --name python2_temp');
 
   title('post-link complete');
-});
-
-gulp.task('conda:run-test', async (d) => {
-  title('Running tests...');
 });
 
 gulp.task('git:add:commit:push', async (d) => {
