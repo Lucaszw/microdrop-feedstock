@@ -42,7 +42,7 @@ gulp.task('build', async (d) => {
 });
 
 gulp.task('conda:build', async () => {
-  /* Ran in conda build process */
+  /* Ran internally by conda during build process */
   const prefix = process.env.PREFIX;
 
   if (os.platform() == 'win32') {
@@ -54,7 +54,7 @@ gulp.task('conda:build', async () => {
   await spawnAsync(`npm install -g ${PACKAGE_NAME}`);
 
   if (os.platform() == 'win32') {
-    title('uninstalling buildtools (must be running as Administrator)');
+    title('uninstalling buildtools');
     await spawnAsync(`npm uninstall --global windows-build-tools`);
   }
 
