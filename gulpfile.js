@@ -25,7 +25,7 @@ gulp.task('conda:build', async () => {
   if (!fs.existsSync(loc)) fs.mkdirSync(loc);
 
   title('packing microdrop');
-  await spawnAsync(`npm pack microdrop-3.0 --prefix=${loc}`);
+  await spawnAsync(`npm pack microdrop-3.0`, loc);
 
   title('copying feedstock');
   const src = path.resolve('../feedstock');
