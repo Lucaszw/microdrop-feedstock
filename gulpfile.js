@@ -87,10 +87,6 @@ gulp.task('git:add:commit:push', async (d) => {
   m1('push changes to feedstock master branch');
   code = await spawnAsync('git commit && git push origin master');
   m2(`code: ${code}`);
-
-  m1('push submodule changes to microdrop master branch');
-  code = await spawnAsync('cd .. && git add ./feedstock && git commit -m "conda-build" && git push origin master');
-  m2(`code: ${code}`);
 });
 
 gulp.task('build', async (d) => {
