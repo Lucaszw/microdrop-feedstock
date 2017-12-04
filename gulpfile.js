@@ -27,13 +27,12 @@ gulp.task('build', async (d) => {
   const microdrop = JSON.parse(output[0]);
   meta.package.version = microdrop.version;
   meta.package.name = microdrop.name;
-  fs.writeFileSync(file, yaml.stringify(meta, 4));
   if (os.platform() == 'win32') {
     meta.build.script = 'npm install & .\\node_modules\\.bin\\gulp conda:build'
   } else {
     meta.build.script = 'npm install && ./node_modules/.bin/gulp conda:build'
   }
-
+  fs.writeFileSync(file, yaml.stringify(meta, 4));
   m2(yaml.stringify(meta, 4));
 
   m1('running conda build .');
