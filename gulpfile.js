@@ -31,6 +31,7 @@ gulp.task('build', async (d) => {
   m2(yaml.stringify(meta, 4));
 
   m1('running conda build .');
+  await spawnAsync('npm install');
   await spawnAsync('conda build .');
 
   m1('reverting meta.yaml file');
