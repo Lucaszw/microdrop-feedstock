@@ -38,7 +38,7 @@ gulp.task('build', async (d) => {
   m1('running conda build .');
   const bldPath = process.env.CONDA_BLD_PATH = process.cwd()
 
-  await spawnAsync(`conda build . --croot ${bld_path}`);
+  await spawnAsync(`conda build . --croot ${bldPath}`);
 
   m1('reverting meta.yaml file');
   meta.package.version = 'VERSION';
