@@ -11,7 +11,7 @@ const log = console.log;
 
 const m1 = (...m) => log(chalk.bold(chalk.blue(...m)));
 const m2 = (...m) => log(chalk.green(...m));
-const title = (...m) => log('-----\n', ...m, '-----\n ');
+const title = (...m) => log('----------\n', ...m, '\n---------- ');
 
 const PACKAGE_NAME = 'microdrop-3.0';
 
