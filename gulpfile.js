@@ -35,19 +35,14 @@ gulp.task('build', async (d) => {
   fs.writeFileSync(file, yaml.stringify(meta, 4));
   m2(yaml.stringify(meta, 4));
 
-  m1('creating build path');
-  const bldPath = path.resolve('temp/conda-bld');
-  fs.mkdirSync('temp');
-  fs.mkdirSync(bldPath);
-  m2(bldPath);
-
   const token = process.env.ANACONDA_TOKEN;
   const user  = process.env.ANACONDA_USER;
   m1('running conda build .');
   if (token && user) {
-    m1({token, user});
+    m2('building with token')
     await spawnAsync(`conda build . --token ${token} --user ${user}`);
   } else {
+    m2('building without token')
     await spawnAsync(`conda build .`);
   }
 
