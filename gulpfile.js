@@ -51,11 +51,6 @@ gulp.task('build', async (d) => {
   meta.package.name = 'NAME';
   fs.writeFileSync(file, yaml.stringify(meta, 4));
   m2(yaml.stringify(meta, 4));
-
-  if (token && user) {
-    m1('uploading to anaconda');
-    await spawnAsync(`anaconda -t ${token} upload --force ${bldPath}`)
-  }
 });
 
 gulp.task('conda:build', async () => {
