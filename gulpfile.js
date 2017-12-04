@@ -41,8 +41,15 @@ gulp.task('build', async (d) => {
   fs.mkdirSync(bldPath);
   m2(bldPath);
 
+  const token = process.env.ANACONDA_TOKEN;
+  const user  = process.env.ANACONDA_USER;
   m1('running conda build .');
-  await spawnAsync(`conda build . --croot ${bldPath}`);
+  if (token && user) {
+    m1({token, user});
+    await spawnAsync(`conda build . --token ${token} --user ${user}`);
+  } else {
+    await spawnAsync(`conda build .`);
+  }
 
   m1('reverting meta.yaml file');
   meta.package.version = 'VERSION';
@@ -50,8 +57,7 @@ gulp.task('build', async (d) => {
   fs.writeFileSync(file, yaml.stringify(meta, 4));
   m2(yaml.stringify(meta, 4));
 
-  const token = process.env.ANACONDA_TOKEN
-  if (token) {
+  if (token && user) {
     m1('uploading to anaconda');
     await spawnAsync(`anaconda -t ${token} upload --force ${bldPath}`)
   }
