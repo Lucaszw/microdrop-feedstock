@@ -36,7 +36,8 @@ gulp.task('build', async (d) => {
   m2(yaml.stringify(meta, 4));
 
   m1('running conda build .');
-  const bldPath = process.env.CONDA_BLD_PATH = process.cwd()
+  fs.mkdirSync(path.join(process.cwd(), 'conda-bld'));
+  const bldPath = process.env.CONDA_BLD_PATH = `${process.cwd()}/conda-bld`;
 
   await spawnAsync(`conda build . --croot ${bldPath}`);
 
