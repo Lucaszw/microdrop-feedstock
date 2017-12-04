@@ -23,6 +23,8 @@ sdist/
 var/
 wheels/
 node_modules/
+conda-bld/
+temp/
 *.egg-info/
 .installed.cfg
 *.egg

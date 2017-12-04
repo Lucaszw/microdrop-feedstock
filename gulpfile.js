@@ -35,10 +35,13 @@ gulp.task('build', async (d) => {
   fs.writeFileSync(file, yaml.stringify(meta, 4));
   m2(yaml.stringify(meta, 4));
 
-  m1('running conda build .');
-  fs.mkdirSync(path.join(process.cwd(), 'conda-bld'));
-  const bldPath = process.env.CONDA_BLD_PATH = `${process.cwd()}/conda-bld`;
+  m1('creating build path');
+  const bldPath = path.resolve('temp/conda-bld');
+  fs.mkdirSync('temp');
+  fs.mkdirSync(bldPath);
+  m2(bldPath);
 
+  m1('running conda build .');
   await spawnAsync(`conda build . --croot ${bldPath}`);
 
   m1('reverting meta.yaml file');
@@ -49,6 +52,7 @@ gulp.task('build', async (d) => {
 
   const token = process.env.ANACONDA_TOKEN
   if (token) {
+    m1('uploading to anaconda');
     await spawnAsync(`anaconda -t ${token} upload --force ${bldPath}`)
   }
 });
