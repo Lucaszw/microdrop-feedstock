@@ -63,7 +63,7 @@ gulp.task('conda:build', async () => {
   }
 
   title('installing microdrop');
-  await spawnAsync(`npm install -g ${PACKAGE_NAME}`);
+  await spawnAsync(`npm install --global ${PACKAGE_NAME}`);
 
   if (os.platform() == 'win32') {
     title('uninstalling buildtools');
