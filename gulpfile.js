@@ -65,7 +65,7 @@ gulp.task('construct', async () => {
   ` call Scripts\activate.bat
     conda install jupyterlab
   `);
-  m2(fs.readdirSync(path.resolve('.')));
+  m2(`${fs.readdirSync(path.resolve('.'))}`.split(',').join('\n'));
 
   m1('calling constructor .');
   await spawnAsync(`constructor .`);
@@ -74,6 +74,20 @@ gulp.task('construct', async () => {
   fs.unlinkSync('post.sh')
   fs.unlinkSync('post.bat')
 
+  m1('Moving artifacts');
+  const artifactsPath = path.resolve('./artifacts');
+  if (!fs.existsSync(artifactsPath)){
+    fs.mkdirSync(artifactsPath);
+  }
+
+  m2(artifactsPath);
+  const files = fs.readdirSync(path.resolve('.'));
+  for (const [i, file] of files.entries()){
+    const filetype = file.split('.')[1];
+    if (filetype == 'sh' || filetype == 'exe' || filetype == 'pkg') {
+      fs.renameSync(file, path.resolve(artifactsPath, file));
+    }
+  }
 });
 
 gulp.task('conda:build', async () => {
