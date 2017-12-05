@@ -20,7 +20,6 @@ gulp.task('build', async (d) => {
 
   const file = path.resolve(__dirname, 'meta.yaml');
 
-  // Load meta.yaml file
   m1('updating meta.yaml file');
   const meta = yaml.load(file);
   var {output} = await spawnAsync(`npm view ${PACKAGE_NAME} --json`, null, true);
@@ -37,6 +36,7 @@ gulp.task('build', async (d) => {
 
   const token = process.env.ANACONDA_TOKEN;
   const user  = process.env.ANACONDA_USER;
+
   m1('running conda build .');
   if (token && user) {
     m2('building with token')
@@ -56,6 +56,22 @@ gulp.task('build', async (d) => {
 gulp.task('construct', async () => {
   const prefix = process.env.PREFIX;
 
+  m1('updating meta.yaml file');
+  const file = path.resolve(__dirname, 'construct.yaml');
+  const construct = yaml.load(file);
+  var {output} = await spawnAsync(`npm view ${PACKAGE_NAME} --json`, null, true);
+  const microdrop = JSON.parse(output[0]);
+  construct.version = microdrop.version;
+  construct.name = microdrop.name;
+  if (os.platform() == 'win32')
+    construct.post_install = 'post.bat'
+  else
+    construct.post_install = 'post.sh'
+
+  fs.writeFileSync(file, yaml.stringify(construct, 4));
+  m2(yaml.stringify(construct, 4));
+
+
   m1('writing post_install scripts');
   fs.writeFileSync('post.sh',
   ` source bin/activate
@@ -74,18 +90,25 @@ gulp.task('construct', async () => {
   fs.unlinkSync('post.sh')
   fs.unlinkSync('post.bat')
 
+  m1('reverting meta.yaml file');
+  construct.version = 'VERSION';
+  construct.name = 'NAME';
+  fs.writeFileSync(file, yaml.stringify(construct, 4));
+  m2(yaml.stringify(construct, 4));
+
   m1('Moving artifacts');
   const artifactsPath = path.resolve('./artifacts');
   if (!fs.existsSync(artifactsPath)){
     fs.mkdirSync(artifactsPath);
   }
-
   m2(artifactsPath);
-  const files = fs.readdirSync(path.resolve('.'));
+
+  const files = fs.readdirSync(__dirname);
   for (const [i, file] of files.entries()){
-    const filetype = file.split('.')[1];
-    if (filetype == 'sh' || filetype == 'exe' || filetype == 'pkg') {
+    const filetype = path.extname(file);
+    if (filetype == '.sh' || filetype == '.exe' || filetype == '.pkg') {
       fs.renameSync(file, path.resolve(artifactsPath, file));
+      m2(path.resolve(artifactsPath, file));
     }
   }
 });
