@@ -3,6 +3,9 @@
   "version": "0.0.2",
   "description": "Conda Recipe for Microdrop",
   "main": "gulpfile.js",
+  "scripts": {
+    "install-pkgs": "npm install"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Lucaszw/microdrop-feedstock.git"
