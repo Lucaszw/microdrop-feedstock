@@ -53,6 +53,29 @@ gulp.task('build', async (d) => {
   m2(yaml.stringify(meta, 4));
 });
 
+gulp.task('construct', async () => {
+  const prefix = process.env.PREFIX;
+
+  m1('writing post_install scripts');
+  fs.writeFileSync('post.sh',
+  ` source bin/activate
+    conda install jupyterlab
+  `);
+  fs.writeFileSync('post.bat',
+  ` call Scripts\activate.bat
+    conda install jupyterlab
+  `);
+  m2(fs.readdirSync(path.resolve('.')));
+
+  m1('calling constructor .');
+  await spawnAsync(`constructor .`);
+
+  m1('Removing post_install scripts');
+  fs.unlinkSync('post.sh')
+  fs.unlinkSync('post.bat')
+
+});
+
 gulp.task('conda:build', async () => {
   /* Ran internally by conda during build process */
   const prefix = process.env.PREFIX;

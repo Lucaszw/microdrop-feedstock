@@ -1,0 +1,19 @@
+name: microdrop
+version: 3
+
+channels:
+  - http://repo.continuum.io/pkgs/free/
+  - https://conda.anaconda.org/sci-bots
+  - https://conda.anaconda.org/lucaszw
+  - https://conda.anaconda.org/sci-bots-build
+  - https://conda.anaconda.org/dfroger
+  - https://conda.anaconda.org/conda-forge
+specs:
+  - python 3*
+  - conda
+  - anaconda-client
+  - nodejs 8*
+  - microdrop-3.0
+
+post_install: post.sh      [unix]
+post_install: post.bat     [win]

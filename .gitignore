@@ -25,6 +25,10 @@ wheels/
 node_modules/
 conda-bld/
 temp/
+post.bat
+post.sh
+microdrop
+microdrop*.sh
 *.egg-info/
 .installed.cfg
 *.egg
