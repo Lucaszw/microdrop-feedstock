@@ -8,7 +8,7 @@ channels:
     - 'https://conda.anaconda.org/dfroger'
     - 'https://conda.anaconda.org/conda-forge'
 specs:
-    - 'python 3*'
+    - 'python 3.5*'
     # - conda
     # - anaconda-client
     # - 'nodejs 8*'
