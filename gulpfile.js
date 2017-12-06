@@ -54,8 +54,6 @@ gulp.task('build', async (d) => {
 });
 
 gulp.task('construct', async () => {
-  const prefix = process.env.PREFIX;
-
   m1('updating meta.yaml file');
   const file = path.resolve(__dirname, 'construct.yaml');
   const construct = yaml.load(file);
@@ -97,6 +95,7 @@ gulp.task('construct', async () => {
   m2(yaml.stringify(construct, 4));
 
   m1('Moving artifacts');
+  m2(`${fs.readdirSync(path.resolve('.'))}`.split(',').join('\n'));
   const artifactsPath = path.resolve('./artifacts');
   if (!fs.existsSync(artifactsPath)){
     fs.mkdirSync(artifactsPath);
@@ -115,8 +114,6 @@ gulp.task('construct', async () => {
 
 gulp.task('conda:build', async () => {
   /* Ran internally by conda during build process */
-  const prefix = process.env.PREFIX;
-
   if (os.platform() == 'win32') {
     title('installing buildtools (must be running as Administrator)');
     await spawnAsync(`npm install --global --production windows-build-tools`);
