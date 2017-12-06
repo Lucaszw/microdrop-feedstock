@@ -72,11 +72,14 @@ gulp.task('construct', async () => {
 
   m1('writing post_install scripts');
   fs.writeFileSync('post.sh',
-  ` source bin/activate
+  ` echo running post.sh
+    source bin/activate
     conda install jupyterlab
   `);
   fs.writeFileSync('post.bat',
-  ` call Scripts\activate.bat
+  ` echo running post.bat
+    call Scripts\activate.bat
+    conda install nsis
     conda install jupyterlab
   `);
   m2(`${fs.readdirSync(path.resolve('.'))}`.split(',').join('\n'));
