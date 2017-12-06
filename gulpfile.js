@@ -105,7 +105,7 @@ gulp.task('construct', async () => {
   const files = fs.readdirSync(__dirname);
   for (const [i, file] of files.entries()){
     const filetype = path.extname(file);
-    if (filetype == '.sh' || filetype == '.exe' || filetype == '.pkg') {
+    if (filetype == '.sh' || filetype == '.exe' || filetype == '.pkg' || filetype == '.bat') {
       fs.renameSync(file, path.resolve(artifactsPath, file));
       m2(path.resolve(artifactsPath, file));
     }
