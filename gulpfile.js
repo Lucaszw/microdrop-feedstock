@@ -94,6 +94,7 @@ gulp.task('construct', async () => {
   m1('reverting meta.yaml file');
   construct.version = 'VERSION';
   construct.name = 'NAME';
+  construct.post_install = 'post.sh'
   fs.writeFileSync(file, yaml.stringify(construct, 4));
   m2(yaml.stringify(construct, 4));
 
