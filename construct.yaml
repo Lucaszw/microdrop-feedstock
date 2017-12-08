@@ -8,7 +8,7 @@ channels:
     - 'https://conda.anaconda.org/dfroger'
     - 'https://conda.anaconda.org/conda-forge'
 specs:
-    - 'python 3.5*'
+    - 'python >=3.6'
     - conda
     - 'nodejs 8*'
     - microdrop-3.0
