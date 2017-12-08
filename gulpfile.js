@@ -122,6 +122,7 @@ gulp.task('conda:build', async () => {
     title('installing buildtools (must be running as Administrator)');
     await spawnAsync(`npm install --global --production windows-build-tools`);
     await spawnAsync(`npm config set msvs_version 2015 --global`);
+    await spawnAsync(`npm config set python C:\\Miniconda\\Scripts\\python`)
     await spawnAsync(`set`);
   }
 
