@@ -10,6 +10,7 @@ channels:
 specs:
     - 'python 3.5*'
     - conda
+    - 'nodejs 8*'
     - microdrop-3.0
 post_install: post.sh
 ignore_duplicate_files: true

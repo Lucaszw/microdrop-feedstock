@@ -80,7 +80,6 @@ gulp.task('construct', async () => {
   fs.writeFileSync('post.bat',
   ` echo running post.bat
     call Scripts\activate.bat
-    conda install nsis
     conda install jupyterlab
     cp bin\microdrop-3.0 microdrop-3.0
   `);
