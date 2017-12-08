@@ -79,8 +79,8 @@ gulp.task('construct', async () => {
   `);
   fs.writeFileSync('post.bat',
   ` echo running post.bat
-    call Scripts\activate.bat & conda install jupyterlab
-    cp bin\microdrop-3.0 microdrop-3.0
+    call Scripts\\activate.bat & conda install jupyterlab
+    cp bin\\microdrop-3.0 microdrop-3.0
   `);
   m2(`${fs.readdirSync(path.resolve('.'))}`.split(',').join('\n'));
 
