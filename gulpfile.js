@@ -13,7 +13,7 @@ const m1 = (...m) => log(chalk.bold(chalk.blue(...m)));
 const m2 = (...m) => log(chalk.green(...m));
 const title = (...m) => log('---------------\n', ...m, '\n--------------- ');
 
-const PACKAGE_NAME = 'microdrop-3.0';
+const PACKAGE_NAME = 'microdrop';
 
 gulp.task('build', async (d) => {
   /* Runs 'conda build .' after modifying meta.yaml */
@@ -48,7 +48,6 @@ gulp.task('build', async (d) => {
 
   m1('reverting meta.yaml file');
   meta.package.version = 'VERSION';
-  meta.package.name = 'NAME';
   fs.writeFileSync(file, yaml.stringify(meta, 4));
   m2(yaml.stringify(meta, 4));
 });
@@ -75,12 +74,12 @@ gulp.task('construct', async () => {
   ` echo running post.sh
     source bin/activate
     conda install jupyterlab
-    cp bin/microdrop-3.0 microdrop-3.0
+    cp bin/microdrop-3 microdrop-3
   `);
   fs.writeFileSync('post.bat',
   ` echo running post.bat
     call Scripts\\activate.bat & conda install jupyterlab
-    cp bin\\microdrop-3.0 microdrop-3.0
+    cp bin\\microdrop-3 microdrop-3
   `);
   m2(`${fs.readdirSync(path.resolve('.'))}`.split(',').join('\n'));
 
@@ -121,11 +120,11 @@ gulp.task('conda:build', async () => {
   if (os.platform() == 'win32') {
     title('installing buildtools (must be running as Administrator)');
     await spawnAsync(`set`);
-    await spawnAsync(`git clone --recursive https://github.com/sci-bots/microdrop-3.0`);
-    await spawnAsync(`rm microdrop-3.0\\package.json & rm microdrop-3.0\\package-lock.json`);
-    await spawnAsync(`cp microdrop-3.0\\conda\\package.json microdrop-3.0\\package.json`);
+    await spawnAsync(`git clone --recursive https://github.com/sci-bots/microdrop-3`);
+    await spawnAsync(`rm microdrop-3\\package.json & rm microdrop-3\\package-lock.json`);
+    await spawnAsync(`cp microdrop-3\\conda\\package.json microdrop-3\\package.json`);
     title('installing microdrop');
-    await spawnAsync(`npm install --global .\\microdrop-3.0`);
+    await spawnAsync(`npm install --global .\\microdrop-3`);
     await spawnAsync(`conda install --yes mosca`);
     await spawnAsync(`npm link mosca`);
   } else {

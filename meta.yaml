@@ -1,5 +1,5 @@
 package:
-    name: NAME
+    name: microdrop-3
     version: VERSION
 source:
     git_url: .
@@ -14,6 +14,6 @@ requirements:
 build:
     script: 'npm i --global gulp && npm i && gulp conda:build'
 about:
-    home: 'https://github.com/sci-bots/microdrop-3.0'
+    home: 'https://github.com/sci-bots/microdrop-3'
     license: BSD
     license_file: LICENSE
