@@ -124,20 +124,14 @@ gulp.task('conda:build', async () => {
     await spawnAsync(`git clone --recursive https://github.com/sci-bots/microdrop-3.0`);
     await spawnAsync(`rm microdrop-3.0\\package.json & rm microdrop-3.0\\package-lock.json`);
     await spawnAsync(`cp microdrop-3.0\\conda\\package.json microdrop-3.0\\package.json`);
+    title('installing microdrop');
     await spawnAsync(`npm install --global .\\microdrop-3.0`);
     await spawnAsync(`conda install mosca`);
     await spawnAsync(`npm link mosca`);
   } else {
+    title('installing microdrop');
     await spawnAsync(`npm install --global ${PACKAGE_NAME}`);
   }
-
-  title('installing microdrop');
-
-  if (os.platform() == 'win32') {
-    title('uninstalling buildtools');
-    await spawnAsync(`npm uninstall --global windows-build-tools`);
-  }
-
 });
 
 function spawnAsync(cmd, cwd, hideOutput) {
