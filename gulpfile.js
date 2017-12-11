@@ -121,13 +121,16 @@ gulp.task('conda:build', async () => {
   if (os.platform() == 'win32') {
     title('installing buildtools (must be running as Administrator)');
     await spawnAsync(`npm install --global --production windows-build-tools`);
-    await spawnAsync(`npm config set msvs_version 2012 --global`);
+    await spawnAsync(`npm install --global node-gyp`);
+    await spawnAsync(`npm config set msvs_version 2012`);
     await spawnAsync(`npm config set python C:\\Miniconda\\Scripts\\python`)
     await spawnAsync(`set`);
+    await spawnAsync(`npm install --global ${PACKAGE_NAME} --msvs_version 2012`);
+  } else {
+    await spawnAsync(`npm install --global ${PACKAGE_NAME}`);
   }
 
   title('installing microdrop');
-  await spawnAsync(`npm install --global ${PACKAGE_NAME}`);
 
   if (os.platform() == 'win32') {
     title('uninstalling buildtools');
