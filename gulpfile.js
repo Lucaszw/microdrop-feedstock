@@ -126,7 +126,7 @@ gulp.task('conda:build', async () => {
     await spawnAsync(`cp microdrop-3.0\\conda\\package.json microdrop-3.0\\package.json`);
     title('installing microdrop');
     await spawnAsync(`npm install --global .\\microdrop-3.0`);
-    await spawnAsync(`conda install mosca`);
+    await spawnAsync(`conda install --yes mosca`);
     await spawnAsync(`npm link mosca`);
   } else {
     title('installing microdrop');
