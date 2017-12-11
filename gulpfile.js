@@ -120,12 +120,13 @@ gulp.task('conda:build', async () => {
   /* Ran internally by conda during build process */
   if (os.platform() == 'win32') {
     title('installing buildtools (must be running as Administrator)');
-    await spawnAsync(`npm install --global --production windows-build-tools`);
-    await spawnAsync(`npm install --global node-gyp`);
-    await spawnAsync(`npm config set msvs_version 2012`);
-    await spawnAsync(`npm config set python C:\\Miniconda\\Scripts\\python`)
     await spawnAsync(`set`);
-    await spawnAsync(`npm install --global ${PACKAGE_NAME} --msvs_version 2012`);
+    await spawnAsync(`git clone --recursive https://github.com/sci-bots/microdrop-3.0`);
+    await spawnAsync(`rm microdrop-3.0\\package.json & rm microdrop-3.0\\package-lock.json`);
+    await spawnAsync(`cp microdrop-3.0\\conda\\package.json microdrop-3.0\\package.json`);
+    await spawnAsync(`npm install --global .\\microdrop-3.0`);
+    await spawnAsync(`conda install mosca`);
+    await spawnAsync(`npm link mosca`);
   } else {
     await spawnAsync(`npm install --global ${PACKAGE_NAME}`);
   }

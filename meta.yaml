@@ -5,12 +5,11 @@ source:
     git_url: .
 requirements:
     build:
-        - 'python 3*'
-        - 'leveldb'
+        - 'python 2.7*'
+        - 'git'
         - 'nodejs >=8'
     run:
         - 'python 3*'
-        - 'leveldb'
         - 'nodejs >=8'
 build:
     script: 'npm i --global gulp && npm i && gulp conda:build'
