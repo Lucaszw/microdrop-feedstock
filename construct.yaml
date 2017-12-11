@@ -12,5 +12,6 @@ specs:
     - conda
     - 'nodejs 8*'
     - microdrop-3.0
+    - leveldb
 post_install: post.sh
 ignore_duplicate_files: true
