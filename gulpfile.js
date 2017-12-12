@@ -126,7 +126,8 @@ gulp.task('conda:build', async () => {
 
     title('building microdrop');
     await spawnAsync(`npm i --global gulp`);
-    await spawnAsync(`cd microdrop-3 & npm i & gulp build`);
+    await spawnAsync(`gulp --cwd .\\microdrop-3 install:microdrop`);
+    await spawnAsync(`gulp --cwd .\\microdrop-3 build`);
 
     title('installing local microdrop');
     await spawnAsync(`npm install --global .\\microdrop-3`);
