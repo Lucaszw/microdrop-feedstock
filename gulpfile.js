@@ -123,7 +123,12 @@ gulp.task('conda:build', async () => {
     await spawnAsync(`git clone --recursive https://github.com/sci-bots/microdrop-3`);
     await spawnAsync(`rm microdrop-3\\package.json & rm microdrop-3\\package-lock.json`);
     await spawnAsync(`cp microdrop-3\\conda\\package.json microdrop-3\\package.json`);
-    title('installing microdrop');
+
+    title('building microdrop');
+    await spawnAsync(`npm i --global gulp`);
+    await spawnAsync(`cd microdrop-3 & npm i & gulp build`);
+
+    title('installing local microdrop');
     await spawnAsync(`npm install --global .\\microdrop-3`);
     await spawnAsync(`conda install --yes mosca`);
     await spawnAsync(`npm link mosca`);
