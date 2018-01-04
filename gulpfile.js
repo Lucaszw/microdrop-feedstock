@@ -118,7 +118,7 @@ gulp.task('construct', async () => {
 gulp.task('conda:build', async () => {
   /* Ran internally by conda during build process */
     title('installing microdrop');
-    await spawnAsync(`npm install --global ${PACKAGE_NAME}`);
+    await spawnAsync(`npm install --global ${PACKAGE_NAME} --no-optional`);
 });
 
 function spawnAsync(cmd, cwd, hideOutput) {
