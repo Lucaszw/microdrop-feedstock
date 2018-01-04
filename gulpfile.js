@@ -13,7 +13,7 @@ const m1 = (...m) => log(chalk.bold(chalk.blue(...m)));
 const m2 = (...m) => log(chalk.green(...m));
 const title = (...m) => log('---------------\n', ...m, '\n--------------- ');
 
-const PACKAGE_NAME = 'microdrop-3.0';
+const PACKAGE_NAME = 'microdrop';
 
 gulp.task('build', async (d) => {
   /* Runs 'conda build .' after modifying meta.yaml */
@@ -48,7 +48,6 @@ gulp.task('build', async (d) => {
 
   m1('reverting meta.yaml file');
   meta.package.version = 'VERSION';
-  meta.package.name = 'NAME';
   fs.writeFileSync(file, yaml.stringify(meta, 4));
   m2(yaml.stringify(meta, 4));
 });
@@ -69,17 +68,18 @@ gulp.task('construct', async () => {
   fs.writeFileSync(file, yaml.stringify(construct, 4));
   m2(yaml.stringify(construct, 4));
 
+
   m1('writing post_install scripts');
   fs.writeFileSync('post.sh',
   ` echo running post.sh
     source bin/activate
     conda install jupyterlab
-    cp bin/microdrop-3.0 microdrop-3.0
+    cp bin/microdrop-3 microdrop-3
   `);
   fs.writeFileSync('post.bat',
   ` echo running post.bat
     call Scripts\\activate.bat & conda install jupyterlab
-    cp bin\\microdrop-3.0 microdrop-3.0
+    cp bin\\microdrop-3 microdrop-3
   `);
   m2(`${fs.readdirSync(path.resolve('.'))}`.split(',').join('\n'));
 
@@ -116,20 +116,9 @@ gulp.task('construct', async () => {
 });
 
 gulp.task('conda:build', async () => {
-  // /* Ran internally by conda during build process */
-  // if (os.platform() == 'win32') {
-  //   title('installing buildtools (must be running as Administrator)');
-  //   await spawnAsync(`npm install --global --production windows-build-tools`);
-  // }
-
-  title('installing microdrop');
-  await spawnAsync(`npm install --global ${PACKAGE_NAME}`);
-
-  // if (os.platform() == 'win32') {
-  //   title('uninstalling buildtools');
-  //   await spawnAsync(`npm uninstall --global windows-build-tools`);
-  // }
-
+  /* Ran internally by conda during build process */
+    title('installing microdrop');
+    await spawnAsync(`npm install --global ${PACKAGE_NAME}`);
 });
 
 function spawnAsync(cmd, cwd, hideOutput) {
