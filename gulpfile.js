@@ -69,7 +69,6 @@ gulp.task('construct', async () => {
   fs.writeFileSync(file, yaml.stringify(construct, 4));
   m2(yaml.stringify(construct, 4));
 
-
   m1('writing post_install scripts');
   fs.writeFileSync('post.sh',
   ` echo running post.sh
@@ -117,19 +116,19 @@ gulp.task('construct', async () => {
 });
 
 gulp.task('conda:build', async () => {
-  /* Ran internally by conda during build process */
-  if (os.platform() == 'win32') {
-    title('installing buildtools (must be running as Administrator)');
-    await spawnAsync(`npm install --global --production windows-build-tools`);
-  }
+  // /* Ran internally by conda during build process */
+  // if (os.platform() == 'win32') {
+  //   title('installing buildtools (must be running as Administrator)');
+  //   await spawnAsync(`npm install --global --production windows-build-tools`);
+  // }
 
   title('installing microdrop');
   await spawnAsync(`npm install --global ${PACKAGE_NAME}`);
 
-  if (os.platform() == 'win32') {
-    title('uninstalling buildtools');
-    await spawnAsync(`npm uninstall --global windows-build-tools`);
-  }
+  // if (os.platform() == 'win32') {
+  //   title('uninstalling buildtools');
+  //   await spawnAsync(`npm uninstall --global windows-build-tools`);
+  // }
 
 });
 
